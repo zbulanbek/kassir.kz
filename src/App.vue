@@ -10,7 +10,7 @@
     :close="closeModal">
     <div class="modal-wrap">
       <div class="modal-header">
-        <p class="title">{{ columnType == 'CreateItem' ? 'Создать задачу' : 'Обновить задачу' }}</p>
+        <p class="title">{{ columnType == 'CreateItem' ? 'Создать задачу' : 'Редактировать задачу' }}</p>
         <button @click="closeModal" class="close-btn"></button>
       </div>
       <div class="modal-body">
@@ -19,6 +19,7 @@
         :is="columnType" 
         :currentColumn="currentColumn"
         @closeModal="closeModal"
+        @deleteColumn="deleteColumn"
         @updateColumn="updateColumn"
         @addColumn="addColumn"
         ></component>
@@ -70,7 +71,6 @@ export default {
   },
   methods:{
     addColumn(newColumn) {
-      console.log('newColumn', newColumn);
       if (newColumn) {
         this.maxId = this.maxId + 1;
         this.columns[0].list.push({
@@ -90,6 +90,7 @@ export default {
       let index_column = this.currentColumn.index;
       let index_list = this.findIndexList(index_column);
       this.columns[index_column].list[index_list].name = this.currentColumn.name;
+      this.closeModal();
     },
     showModal () {
       this.isShowModal = true;
@@ -106,6 +107,7 @@ export default {
       let index_list = this.columns[index_column].list.findIndex(item => item.id === id);
       this.currentColumn.name = this.columns[index_column].list[index_list].name;
       this.currentColumn.index = index_column;
+      this.currentColumn.description = this.columns[index_column].list[index_list].description;
       this.currentColumn.id = id;
       this.showModal();
     },

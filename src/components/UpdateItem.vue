@@ -2,6 +2,10 @@
 	<div>
 		<template v-if="!isUpdateColumn">
 			<div class="column-item">
+				<label>Номер карточки</label>
+				<p>{{currentColumn.id}}</p>
+			</div>
+			<div class="column-item">
 				<label>Название</label>
 				<p>{{currentColumn.name}}</p>
 			</div>
@@ -10,8 +14,8 @@
 				<p>{{currentColumn.description}}</p>
 			</div>
 			<div class="btn-wrap">
-				<button @click="deleteColumn()" class="btn-main btn-red">Удалить </button>
-	    		<button @click="isUpdateColumn = true" class="btn-main">Обновить</button>
+				<button @click="deleteColumn" class="btn-main btn-red">Удалить </button>
+	    		<button @click="isUpdateColumn = true" class="btn-main">Редактировать</button>
 			</div>
 	   
 	    </template>
@@ -32,7 +36,7 @@
 		          	placeholder="Описание"
 		        >
 		    </div>
-	         <button @click="updateColumn()" class="btn-main">Обновить задачу</button>
+	         <button @click="updateColumn" class="btn-main  btn-auto">Редактировать задачу</button>
 	    </template>
 	</div>
 </template>
@@ -52,6 +56,9 @@
     		updateColumn(){
     			this.$emit('updateColumn');
     			this.isUpdateColumn = false;
+    		},
+    		deleteColumn(){
+    			this.$emit('deleteColumn');
     		}
     	}
 
